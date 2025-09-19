@@ -154,7 +154,7 @@ const Relatorios = () => {
   const [selectedStatus, setSelectedStatus] = useState([]);
   const {user} = useContext(AuthContext)
 
-  // const [tagIds, setTagIds] = useState([]);
+  const [tagIds, setTagIds] = useState([]);
   const [queueIds, setQueueIds] = useState([]);
   const [ticketId, setTicketId] = useState('')
   const [userIds, setUserIds] = useState([]);
@@ -241,10 +241,10 @@ const Relatorios = () => {
   },[user])
 
 
-  // const handleSelectedTags = (selecteds) => {
-  //   const tags = selecteds.map((t) => t.id);
-  //   setTagIds(tags);
-  // };
+  const handleSelectedTags = (selecteds) => {
+    const tags = selecteds.map((t) => t.id);
+    setTagIds(tags);
+  };
 
   const exportarGridParaExcel = async () => {
     setLoading(true); // Define o estado de loading como true durante o carregamento
@@ -254,11 +254,10 @@ const Relatorios = () => {
         searchParam,
         currentContact,
         whatsappId: JSON.stringify(selectedWhatsapp),
-        // tags: JSON.stringify(tagIds),
+        tags: JSON.stringify(tagIds),
         users: JSON.stringify(userIds),
         queueIds: JSON.stringify(queueIds),
         status: JSON.stringify(selectedStatus),
-        // tags: tagIds,
         dateFrom,
         dateTo,
         page: 1, // Passa o número da página para a API
@@ -297,11 +296,10 @@ const Relatorios = () => {
         ticketId,
         contactId: currentContact?.id,
         whatsappId: JSON.stringify(selectedWhatsapp),
-        // tags: JSON.stringify(tagIds),
+        tags: JSON.stringify(tagIds),
         users: JSON.stringify(userIds),
         queueIds: JSON.stringify(queueIds),
         status: JSON.stringify(selectedStatus),
-        // tags: tagIds,
         dateFrom,
         dateTo,
         page: pageNumber, // Passa o número da página para a API
@@ -404,14 +402,14 @@ const Relatorios = () => {
             <Grid item xs={12} md={3} xl={3}>
               <UsersFilter onFiltered={handleSelectedUsers} />
             </Grid>
-            {/* <Grid item xs={12} md={4} xl={4}>
-              <TagsFilter onFiltered={handleSelectedTags} />
-            </Grid> */}
             <Grid item xs={12} md={3} xl={3} style={{ marginTop: '-13px' }}>
               <QueueSelectCustom
                 selectedQueueIds={queueIds}
                 onChange={values => setQueueIds(values)}
               />
+            </Grid>
+            <Grid item xs={12} md={3} xl={3}>
+              <TagsFilter onFiltered={handleSelectedTags} />
             </Grid>
 
             <Grid item xs={12} sm={3} md={3}>
